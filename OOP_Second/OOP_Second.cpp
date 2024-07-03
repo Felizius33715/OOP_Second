@@ -35,8 +35,6 @@ public:
 
 class RightTriangle : public Triangle
 {
-    RightTriangle(double a, double b, double c, double A, double B) : Triangle(a, b, c, A, B, 90) {}
-
 public:
     static std::unique_ptr<RightTriangle> create(double a, double b, double c, double A, double B) {
         return std::unique_ptr<RightTriangle>(new RightTriangle(a, b, c, A, B));
@@ -45,8 +43,6 @@ public:
 
 class IsoscelesTriangle : public Triangle
 {
-    IsoscelesTriangle(double a, double b, double A, double B) : Triangle(a, b, a, A, B, A) {}
-
 public:
     static std::unique_ptr<IsoscelesTriangle> create(double a, double b, double A, double B)
     {
@@ -56,8 +52,6 @@ public:
 
 class EquilateralTriangle : public Triangle
 {
-    EquilateralTriangle(double side) : Triangle(side, side, side, 60, 60, 60) {}
-
 public:
     static std::unique_ptr<EquilateralTriangle> create(double side)
     {
@@ -87,19 +81,24 @@ public:
 
 class Rectangle : public Quadrilateral
 {
-    Rectangle(double a, double b) : Quadrilateral(a, b, a, b, 90, 90, 90, 90) {}
-
 public:
-    static std::unique_ptr<Rectangle> create(double a, double b)
+    Parallelogram() {}
+    Parallelogram(int a, int b, int A, int B)
     {
-        return std::unique_ptr<Rectangle>(new Rectangle(a, b));
+        name = "Parallelogram";
+        this->a = a;
+        this->b = b;
+        this->A = A;
+        this->B = B;
+        c = a;
+        d = b;
+        C = A;
+        D = B;
     }
 };
 
 class Square : public Quadrilateral
 {
-    Square(double side) : Quadrilateral(side, side, side, side, 90, 90, 90, 90) {}
-
 public:
     static std::unique_ptr<Square> create(double side)
     {
@@ -109,8 +108,6 @@ public:
 
 class Parallelogram : public Quadrilateral
 {
-    Parallelogram(double a, double b, double A, double B) : Quadrilateral(a, b, a, b, A, B, A, B) {}
-
 public:
     static std::unique_ptr<Parallelogram> create(double a, double b, double A, double B)
     {
@@ -120,19 +117,12 @@ public:
 
 class Rhombus : public Quadrilateral
 {
-    Rhombus(double side, double A, double B) : Quadrilateral(side, side, side, side, A, B, A, B) {}
-
 public:
     static std::unique_ptr<Rhombus> create(double side, double A, double B)
     {
         return std::unique_ptr<Rhombus>(new Rhombus(side, A, B));
     }
 };
-
-void print_info(const Figure* figure)
-{
-    figure->print_info();
-}
 
 int main()
 {
@@ -158,5 +148,14 @@ int main()
     print_info(parallelogram.get());
     print_info(rhombus.get());
 
+    triangle.print_info(&triangle);
+    rightTriangle.print_info(&rightTriangle);
+    isoscelesTriangle.print_info(&isoscelesTriangle);
+    equilateralTriangle.print_info(&equilateralTriangle);
+    quadrangle.print_info(&quadrangle);
+    rectangle.print_info(&rectangle);
+    square.print_info(&square);
+    parallelogram.print_info(&parallelogram);
+    rhombus.print_info(&rhombus);
     return 0;
 }
